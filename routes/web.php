@@ -12,5 +12,17 @@
 */
 
 Route::get('/', function () {
+
+    //publish an event with redis
+    $data = [
+    	'event'=>'UserSignedUp',
+    	'data'=>[
+    		'username'=>'JohnDoe'
+    	]
+    ]; 
+
+    Redis::publish('test-channel', json_encode($data));
+
     return view('welcome');
+   	
 });

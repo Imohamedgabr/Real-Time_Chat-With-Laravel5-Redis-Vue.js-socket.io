@@ -49,19 +49,6 @@
                 font-size: 84px;
             }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
         </style>
     </head>
     <body>
@@ -78,18 +65,34 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div id="app">
+                    <h1>New Users</h1>
+                    <ul>
+                        <li v-for="user in users"> @{{user}} </li>
+                    </ul>
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                
             </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <script>
+
+            var socket = io('http://redischat.dev:3000');
+
+            new Vue({
+               el: '#app',
+
+               data:{
+                    users:[]
+               },
+                mounted(){
+                    socket.on('test-channel:UserSignedUp',function(data){
+                        this.users.push(data.username);
+                    }.bind(this));
+                }
+
+            });
+        </script>
     </body>
 </html>
