@@ -2,11 +2,11 @@
     <div>
         <div v-for="message in messages">
 
-             <!-- <small> {{ message.username }} </small> -->
-            <p> {{ message }}</p>
+            <p> <b> {{ message.username }} </b> : {{ message.message }}</p>
         </div>
-
-        <input id="message" type="text" placeholder="Start typing your message..."  v-model="messageText">
+        
+        <!-- sending message when clicking enter -->
+        <input id="message" type="text" placeholder="Start typing your message..."  v-model="messageText" @keyup.enter="sendMessage">
         <button class="btn btn-primary" @click="sendMessage">Send</button>
 
         </div>
@@ -26,10 +26,11 @@
                     
                 mounted(){
                     socket.on('test-channel:App\\Events\\UserSignedUp',function(data){
-                        // console.log(data.message);
-                        //data which gets published and push it in array
+                        // console.log(data.message.message);
+                        // we listen on the socket using node and publish data using the event and the data which gets published we push it in array 
+                        //Note: we don't get that data wrote up there and push it
                         this.messages.push(data.message);
-                        console.log(this.messages);
+                        // console.log(this.messages);
                     }.bind(this));
                 },
                 methods: {

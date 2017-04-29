@@ -1670,10 +1670,11 @@ var socket = io('http://redischat.dev:3000');
     },
     mounted: function mounted() {
         socket.on('test-channel:App\\Events\\UserSignedUp', function (data) {
-            // console.log(data.message);
-            //data which gets published and push it in array
+            // console.log(data.message.message);
+            // we listen on the socket using node and publish data using the event and the data which gets published we push it in array 
+            //Note: we don't get that data wrote up there and push it
             this.messages.push(data.message);
-            console.log(this.messages);
+            // console.log(this.messages);
         }.bind(this));
     },
 
@@ -31762,7 +31763,7 @@ module.exports = function normalizeComponent (
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_vm._l((_vm.messages), function(message) {
-    return _c('div', [_c('p', [_vm._v(" " + _vm._s(message))])])
+    return _c('div', [_c('p', [_c('b', [_vm._v(" " + _vm._s(message.username) + " ")]), _vm._v(" : " + _vm._s(message.message))])])
   }), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
@@ -31779,6 +31780,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.messageText)
     },
     on: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.sendMessage($event)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.messageText = $event.target.value

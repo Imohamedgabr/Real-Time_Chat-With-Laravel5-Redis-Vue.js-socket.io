@@ -14,12 +14,15 @@ class ChatController extends Controller
 
     public function sendMessages(Request $reuqest)
     {
-    	 // $message = '';
-    	 // $message = $request->message;
-    	// recieve data 
+        // recieve data 
+        // just replace user name with the authenticated user name
+    	$array = array( 
+                "username" => $reuqest->username, 
+                "message" => $reuqest->message
+            ); 
     	// publish the data
     	// dd($message);
-    	event(new UserSignedUp($reuqest->message));
+    	event(new UserSignedUp($array));
     	// return response()->json(['message'=>$message]);
     }
 }

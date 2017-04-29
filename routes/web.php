@@ -26,7 +26,7 @@ Route::get('/', function () {
     // event(new UserSignedUp($user)); // whatever u wanna publish
     // event(new UserSignedUp('JohnDoe'));
 
-    return 'Welcome to HomePage';
+    return view('welcome');
    	
 });
 
