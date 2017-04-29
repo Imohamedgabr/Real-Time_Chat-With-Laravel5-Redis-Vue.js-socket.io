@@ -1,23 +1,54 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Example Component</div>
+    <div>
+        <div v-for="message in messages">
 
-                    <div class="panel-body">
-                        I'm an example component!
-                    </div>
-                </div>
-            </div>
+             <!-- <small> {{ message.username }} </small> -->
+            <p> {{ message }}</p>
+        </div>
+
+        <input id="message" type="text" placeholder="Start typing your message..."  v-model="messageText">
+        <button class="btn btn-primary" @click="sendMessage">Send</button>
+
         </div>
     </div>
 </template>
 
 <script>
+    var socket = io('http://redischat.dev:3000');
     export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
+                
+                data() {
+                        return {
+                            messageText: '',
+                            messages:[]
+                        }
+                    },
+                    
+                mounted(){
+                    socket.on('test-channel:App\\Events\\UserSignedUp',function(data){
+                        // console.log(data.message);
+                        //data which gets published and push it in array
+                        this.messages.push(data.message);
+                        console.log(this.messages);
+                    }.bind(this));
+                },
+                methods: {
+                    sendMessage() {
+                        // use axios to post data
+                        axios.post('/chat/message', {
+                            username: 'mohamed',
+                            message: this.messageText
+                          })
+                          .then(function (response) {
+                            console.log(response);
+                          })
+                          .catch(function (error) {
+                            console.log(error);
+                          });
+
+                        this.messageText = '';
+                    }
+                }
+        
     }
 </script>

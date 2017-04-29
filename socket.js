@@ -9,6 +9,8 @@ var redis = new Redis(); // so we need to instantiate this into object
 redis.subscribe('test-channel'); // we are using redis io to subscribe
 
 redis.on('message', function(channel,message) {
+	// console.log(channel, message);
+
 	message = JSON.parse(message);
 	// console.log(message.data.username);
 	io.emit(channel + ':' + message.event , message.data);

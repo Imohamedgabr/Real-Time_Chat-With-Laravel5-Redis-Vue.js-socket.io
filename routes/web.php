@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\UserSignedUp;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,15 +15,30 @@
 Route::get('/', function () {
 
     //publish an event with redis
-    $data = [
-    	'event'=>'UserSignedUp',
-    	'data'=>[
-    		'username'=>'JohnDoe'
-    	]
-    ]; 
+    // $data = [
+    // 	'event'=>'UserSignedUp',
+    // 	'data'=>[
+    // 		'username'=>'JohnDoe'
+    // 	]
+    // ]; 
 
-    Redis::publish('test-channel', json_encode($data));
+    // Redis::publish('test-channel', json_encode($data));
+    // event(new UserSignedUp($user)); // whatever u wanna publish
+    // event(new UserSignedUp('JohnDoe'));
 
-    return view('welcome');
+    return 'Welcome to HomePage';
    	
 });
+
+Route::get('/chat', [
+    'uses' => 'ChatController@showMessages'
+]);
+
+Route::post('/chat/message', [
+    'uses' => 'ChatController@sendMessages'
+]);
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
