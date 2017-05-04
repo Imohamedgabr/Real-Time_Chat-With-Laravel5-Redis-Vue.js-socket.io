@@ -9,25 +9,20 @@
 
 
 					<div class="panel panel-default">
-					  <div class="panel-heading">
-					    <h3 class="panel-title">Chatroom</h3>
-					  </div>
-					  <div class="panel-body">
+						<div class="panel-heading">
+					    	<h3 class="panel-title">Chatroom</h3>
+					 	</div>
 
-					   <div id="chat">
-					   <Example></Example>
-					{{-- 	<div v-for="message in messages">
 
-							<small> @{{ message.user.name }} </small>
-							<p> @{{ message.message }}</p>
-   						</div>
-   					
-						<input id="message" type="text" placeholder="Start typing your message..."  v-model="messageText">
-     					<button class="btn btn-primary" @click="sendMessage">Send</button>
+						<div class="panel-body">
+							
+							<div id="chat">
+					    
+					   			<Example :id="{{ Auth::id() }}"></Example>
+					   
+					 		</div>
 
-					  </div> --}}
-					  </div>
-					</div>
+						</div>
 			
 				</div>
 			</div>

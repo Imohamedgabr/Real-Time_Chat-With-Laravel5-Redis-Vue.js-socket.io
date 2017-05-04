@@ -30,9 +30,9 @@ Route::get('/', function () {
    	
 });
 
-Route::get('/chat', [
-    'uses' => 'ChatController@showMessages'
-]);
+// Route::get('/chat', [
+//     'uses' => 'ChatController@showMessages'
+// ]);
 
 Route::post('/chat/message', [
     'uses' => 'ChatController@sendMessages'
@@ -42,3 +42,28 @@ Route::post('/chat/message', [
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/members', function(){
+    $users = App\User::all();
+        return view('members')->with('users',$users);
+    });
+
+
+Route::post('/sendMessages/{id}', [
+    'uses' => 'MessagesController@sendMessages',
+    'as'=>'conversation'
+]);
+
+Route::get('/conversation', [
+    'uses' => 'MessagesController@getMessages',
+    'as'=>'conversation',
+    'middleware'=>'auth'
+]);
+
+
+Route::get('/returnMessages/{id}', [
+    'uses' => 'MessagesController@returnmessages',
+    'as'=>'returnMessages'
+]);
+

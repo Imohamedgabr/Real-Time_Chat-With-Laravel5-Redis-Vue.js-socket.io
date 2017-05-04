@@ -37,7 +37,10 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        Chat Home
+                    </a>
+                    <a class="navbar-brand" href="{{ url('/members') }}">
+                        Members
                     </a>
                 </div>
 
